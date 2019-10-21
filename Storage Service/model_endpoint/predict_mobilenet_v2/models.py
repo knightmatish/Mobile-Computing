@@ -7,7 +7,6 @@ from django.urls import reverse
 
 def nameFile(filename):
 	return '/'.join(['images', filename])
-
 class UploadImage(models.Model):
 	name = models.CharField(max_length=200)
 	image = models.ImageField(upload_to='images_recieved/')
