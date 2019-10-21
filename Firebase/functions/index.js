@@ -5,9 +5,9 @@ const path = require('path');
 // Create and Deploy Your First Cloud Functions
 // https://firebase.google.com/docs/functions/write-firebase-functions
 
-exports.helloWorld = functions.https.onRequest((request, response) => {
- response.send("Hello from Firebase!");
-});
+// exports.helloWorld = functions.https.onRequest((request, response) => {
+//  response.send("Hello from Firebase!");
+// });
 
 const projectId = 'chatapplication-d7a3e';
 const storage_bucket = new Storage({
@@ -19,7 +19,7 @@ exports.myfirstcouldfunc = functions.storage.object().onFinalize(event => {
 	const contentType = event.contentType;
 	const filePath = event.name;
 	
-	console.log("Hello from nitish");
+	console.log("Hello from nakia");
 
 	if (path.basename(filePath).startsWith('sensored-image')) {
 		console.log("File already processed");
