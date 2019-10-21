@@ -30,15 +30,13 @@ import socket
 hostname = socket.gethostname()    
 IPAddr = socket.gethostbyname(hostname)
 
-
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create your views here.
-MODEL_PATH = "/Users/nitishmathur/Unimelb/Computing project/Trained_Models/output_graph_inception_run_sep_13.pb"
+MODEL_PATH = ""
 
-LABEL_PATH = "/Users/nitishmathur/Unimelb/Computing project/Trained_Models/output_labels_inception_run_sep_13.txt"
-
+LABEL_PATH = ""
 
 
 class TestModel(APIView):
@@ -54,7 +52,7 @@ class TestModel(APIView):
 
 			start = time.time()
 			object_details = self.predict_image_class(image_path, LABEL_PATH, object_details)
-			object_details['url'] = 'http://' + str(IPAddr) + ':8989/media/' + str(image_obj.image) 
+			object_details['url'] = 'http://' + str(IPAddr) + ':80/media/' + str(image_obj.image) 
 
 			print ("Time to create session and classify-",(time.time()-start))
 
