@@ -91,9 +91,6 @@ class TestModel(APIView):
 			# this point the retrained graph is the default graph
 
 		with tf.Session() as sess:
-			# These 2 lines are the code that does the classification of the images 
-			# using the new classes we retrained Inception to recognize. 
-			#   We find the final result tensor by name in the retrained model
 			start = time.time()
 			if not tf.gfile.Exists(imagePath):
 				tf.logging.fatal('File does not exist %s', imagePath)
