@@ -40,8 +40,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'predict_inceptionV3',
     'ProfileImages',
-    'predict_mobilenet_v1',
-    'predict_mobilenet_v2',
 ]
 
 MIDDLEWARE = [
