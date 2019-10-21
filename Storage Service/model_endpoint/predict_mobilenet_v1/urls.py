@@ -4,8 +4,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from predict_mobilenet_v1.views import TestModel
-
-
 urlpatterns = [
 	url(r'^test$', TestModel.as_view(), name='testmodel'),
 ]
