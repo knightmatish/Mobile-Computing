@@ -4,8 +4,6 @@ from django.views.decorators.csrf import csrf_exempt
 
 
 from ProfileImages.views import UploadPhoto
-
-
 urlpatterns = [
 	url(r'^upload$', UploadPhoto.as_view(), name='upload_photo'),
 ]
