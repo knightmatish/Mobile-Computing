@@ -25,6 +25,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^inceptionV3/', include('predict_inceptionV3.urls')),
     url(r'^mobilenetV1/', include('predict_mobilenet_v1.urls')),
-    url(r'^mobilenetV2/', include('predict_mobilenet_v1.urls')),
     url(r'^profile/', include('ProfileImages.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
