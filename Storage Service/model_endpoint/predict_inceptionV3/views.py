@@ -78,8 +78,6 @@ class TestModel(APIView):
 	
 		matches = None # Default return to none
 
-		
-
 		# Load the image from file
 		image_data = tf.gfile.FastGFile(imagePath, 'rb').read()
 
