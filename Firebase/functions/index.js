@@ -22,7 +22,7 @@ exports.myfirstcouldfunc = functions.storage.object().onFinalize(event => {
 	console.log("Hello from nakia");
 
 	if (path.basename(filePath).startsWith('sensored-image')) {
-		console.log("File already processed");
+		console.log("File already processed!!");
 		return;
 	}
 
