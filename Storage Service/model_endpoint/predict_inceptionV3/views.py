@@ -34,10 +34,8 @@ IPAddr = socket.gethostbyname(hostname)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Create your views here.
-MODEL_PATH = ""
-
-LABEL_PATH = ""
-
+MODEL_PATH = "/mnt/project/InceptionV3/output_graph_inception_run_2.pb"
+LABEL_PATH = "/mnt/project/InceptionV3/output_label_inception_run_2.txt"
 
 class TestModel(APIView):
 	queryset = UploadImage.objects.all()
@@ -50,6 +48,7 @@ class TestModel(APIView):
 			image_path = os.path.join(BASE_DIR, 'media') + '/' + str(image_obj.image) 
 			print ("-"*10,client_ip)
 
+			# Starting time for classification
 			start = time.time()
 			object_details = self.predict_image_class(image_path, LABEL_PATH, object_details)
 			object_details['url'] = 'http://' + str(IPAddr) + ':80/media/' + str(image_obj.image) 
@@ -134,8 +133,6 @@ class TestModel(APIView):
 	
 		matches = None # Default return to none
 
-		
-
 		# Load the image from file
 		image_data = tf.gfile.FastGFile(imagePath, 'rb').read()
 
@@ -166,7 +163,8 @@ class TestModel(APIView):
 			#   use np.squeeze to convert the tensor to a 1-d vector of probability values
 			predictions = np.squeeze(predictions)
 
-			top_k = predictions.argsort()[-5:][::-1]  # Getting the indicies of the top 5 predictions
+			# Getting the indicies of the top 5 predictions
+			top_k = predictions.argsort()[-5:][::-1]  
 
 			#   read the class labels in from the label file
 			f = open(labelPath, 'rb')
@@ -185,7 +183,6 @@ class TestModel(APIView):
 				print('{0:s} (score = {1:.5f})'.format(human_string, score))
 
 			print("")
-
 			answer = labels[top_k[0]]
 			print ("Time to classify only-",(time.time()-start))
 			return object_details
