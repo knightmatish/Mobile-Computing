@@ -2,8 +2,8 @@
 //  AppUserCell.swift
 //  ChatApplication
 //
-//  Created by Yash on 10/8/19.
-//  Copyright © 2019 Yash. All rights reserved.
+//  Created by Yash, Nitish, Nakia, Suraj and Krishna on 10/8/19.
+//  Copyright © 2019 Yash, Nitish, Nakia, Suraj and Krishna. All rights reserved.
 //
 
 import UIKit
@@ -46,7 +46,8 @@ class AppUserCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        //Move the names of the users to the right so that they do not overlap with the profile image
+        
+        // Move the names of the users to the right so that they do not overlap with the profile image
         textLabel?.frame = CGRect(x: 75, y: textLabel!.frame.origin.y , width: textLabel!.frame.width, height:  textLabel!.frame.height)
         detailTextLabel?.frame = CGRect(x: 75, y: detailTextLabel!.frame.origin.y + 5 , width: detailTextLabel!.frame.width, height:  detailTextLabel!.frame.height)
     }
@@ -73,13 +74,14 @@ class AppUserCell: UITableViewCell {
         super.init(style: .subtitle, reuseIdentifier: reuseIdentifier)
         addSubview(profileImageView)
         addSubview(timeLabel)
-        //Set the constraints for the custom profile image view
+        
+        // Set the constraints for the custom profile image view
         profileImageView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 10).isActive = true
         profileImageView.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         profileImageView.widthAnchor.constraint(equalToConstant: 56).isActive = true
         profileImageView.heightAnchor.constraint(equalToConstant: 56).isActive = true
         
-        //Set the constraints for the custom time label
+        // Set the constraints for the custom time label
         timeLabel.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor).isActive = true
         timeLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 20).isActive = true
         timeLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true

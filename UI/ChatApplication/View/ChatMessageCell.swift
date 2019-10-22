@@ -2,8 +2,8 @@
 //  ChatMessageCell.swift
 //  ChatApplication
 //
-//  Created by Yash on 12/8/19.
-//  Copyright © 2019 Yash. All rights reserved.
+//  Created by Yash, Nitish, Nakia, Suraj and Krishna on 12/8/19.
+//  Copyright © 2019 Yash, Nitish, Nakia, Suraj and Krishna. All rights reserved.
 //
 
 import UIKit
@@ -126,7 +126,7 @@ class ChatMessageCell: UICollectionViewCell {
     }
     
     @objc func handleSeePhoto() {
-        //See Photo logic
+        // See Photo logic
         unsetMask()
     }
     
@@ -192,10 +192,7 @@ class ChatMessageCell: UICollectionViewCell {
         explicitContentLabel.topAnchor.constraint(equalTo: explicitContentImageView.bottomAnchor).isActive = true
         explicitContentLabel.centerXAnchor.constraint(equalTo: shadowView.centerXAnchor).isActive = true
         explicitContentLabel.widthAnchor.constraint(equalTo:shadowView.heightAnchor).isActive = true
-        explicitContentLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true
-        
-        
-        
+        explicitContentLabel.heightAnchor.constraint(equalToConstant: 25).isActive = true        
     }
     
     override init(frame: CGRect) {
@@ -213,7 +210,7 @@ class ChatMessageCell: UICollectionViewCell {
         
         setupShadowView()
         
-        //set constartints
+        // set constartints
         bubbleViewRightAnchor = bubbleView.rightAnchor.constraint(equalTo: self.safeAreaLayoutGuide.rightAnchor,constant: -8)
         bubbleViewRightAnchor?.isActive = true
         bubbleViewLeftAnchor = bubbleView.leftAnchor.constraint(equalTo: self.safeAreaLayoutGuide.leftAnchor, constant: 8)
@@ -237,9 +234,11 @@ class ChatMessageCell: UICollectionViewCell {
     func setupDateView() {
         dateView.addSubview(dateLabel)
         dateLabel.topAnchor.constraint(equalTo: dateView.topAnchor).isActive = true
-        //dateLabel.centerXAnchor.constraint(equalTo: dateView.centerXAnchor).isActive = true
+        
+        // dateLabel.centerXAnchor.constraint(equalTo: dateView.centerXAnchor).isActive = true
         dateLabel.heightAnchor.constraint(equalToConstant: 30).isActive = true
-        //dateLabel.widthAnchor.constraint(equalToConstant: 130).isActive = true
+        
+        // dateLabel.widthAnchor.constraint(equalToConstant: 130).isActive = true
         dateLabel.leftAnchor.constraint(equalTo: dateView.leftAnchor).isActive = true
         dateLabel.rightAnchor.constraint(equalTo: dateView.rightAnchor).isActive = true
         

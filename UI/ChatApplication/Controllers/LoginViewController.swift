@@ -2,8 +2,8 @@
 //  LoginController.swift
 //  Chat
 //
-//  Created by Yash on 4/8/19.
-//  Copyright © 2019 Yash. All rights reserved.
+//  Created by Yash, Nitish, Nakia, Suraj and Krishna on 4/8/19.
+//  Copyright © 2019 Yash, Nitish, Nakia, Suraj and Krishna. All rights reserved.
 //
 
 import UIKit
