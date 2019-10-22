@@ -42,7 +42,24 @@ MAX_NUM_IMAGES_PER_CLASS = 2 ** 27 - 1  # ~134M
 
 
 def create_image_lists(image_dir, testing_percentage, validation_percentage):
+      
+  '''
+  Builds a list of training images from the file system.
 
+  Analyzes the sub folders in the image directory, splits them into stable
+  training, testing, and validation sets, and returns a data structure
+  describing the lists of images for each label and their paths.
+
+  Args:
+    image_dir: String path to a folder containing subfolders of images.
+    testing_percentage: Integer percentage of the images to reserve for tests.
+    validation_percentage: Integer percentage of images reserved for validation.
+
+  Returns:
+    A dictionary containing an entry for each label subfolder, with images split
+    into training, testing, and validation sets within each label.
+
+  '''
 
   if not gfile.Exists(image_dir):
     print("Image directory '" + image_dir + "' not found.")
@@ -78,8 +95,25 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
     validation_images = []
     for file_name in file_list:
       base_name = os.path.basename(file_name)
+
+      '''
+      # We want to ignore anything after '_nohash_' in the file name when
+      # deciding which set to put an image in, the data set creator has a way of
+      # grouping photos that are close variations of each other. For example
+      # this is used in the plant disease data set to group multiple pictures of
+      # the same leaf.
+      '''
       
       hash_name = re.sub(r'_nohash_.*$', '', file_name)
+      '''
+      # This looks a bit magical, but we need to decide whether this file should
+      # go into the training, testing, or validation sets, and we want to keep
+      # existing files in the same set even if more files are subsequently
+      # added.
+      # To do that, we need a stable way of deciding based on just the file name
+      # itself, so we do a hash of that and then use that to generate a
+      # probability value that we use to assign it.
+      '''
      
       hash_name_hashed = hashlib.sha1(compat.as_bytes(hash_name)).hexdigest()
       percentage_hash = ((int(hash_name_hashed, 16) %
@@ -102,6 +136,23 @@ def create_image_lists(image_dir, testing_percentage, validation_percentage):
 
 def get_image_path(image_lists, label_name, index, image_dir, category):
   
+  '''
+  Returns a path to an image for a label at the given index.
+
+  Args:
+    image_lists: Dictionary of training images for each label.
+    label_name: Label string we want to get an image for.
+    index: Int offset of the image we want. This will be moduloed by the
+    available number of images for the label, so it can be arbitrarily large.
+    image_dir: Root folder string of the subfolders containing the training
+    images.
+    category: Name string of set to pull images from - training, testing, or
+    validation.
+
+  Returns:
+    File system path string to an image that meets the requested parameters.
+
+  '''
   if label_name not in image_lists:
     tf.logging.fatal('Label does not exist %s.', label_name)
   label_lists = image_lists[label_name]
@@ -120,13 +171,36 @@ def get_image_path(image_lists, label_name, index, image_dir, category):
 
 def get_bottleneck_path(image_lists, label_name, index, bottleneck_dir,
                         category):
-  
+  '''
+  Returns a path to a bottleneck file for a label at the given index.
+
+  Args:
+    image_lists: Dictionary of training images for each label.
+    label_name: Label string we want to get an image for.
+    index: Integer offset of the image we want. This will be moduloed by the
+    available number of images for the label, so it can be arbitrarily large.
+    bottleneck_dir: Folder string holding cached files of bottleneck values.
+    category: Name string of set to pull images from - training, testing, or
+    validation.
+
+  Returns:
+    File system path string to an image that meets the requested parameters.
+
+  '''
   return get_image_path(image_lists, label_name, index, bottleneck_dir,
                         category) + '.txt'
 
 
 def create_inception_graph():
   
+  '''
+  Creates a graph from saved GraphDef file and returns a Graph object.
+
+  Returns:
+    Graph holding the trained Inception network, and various tensors we'll be
+    manipulating.
+
+  '''
   with tf.Session() as sess:
     model_filename = os.path.join(
         FLAGS.model_dir, 'classify_image_graph_def.pb')
@@ -142,7 +216,19 @@ def create_inception_graph():
 
 def run_bottleneck_on_image(sess, image_data, image_data_tensor,
                             bottleneck_tensor):
-  
+  '''
+  Runs inference on an image to extract the 'bottleneck' summary layer.
+
+  Args:
+    sess: Current active TensorFlow Session.
+    image_data: String of raw JPEG data.
+    image_data_tensor: Input data layer in the graph.
+    bottleneck_tensor: Layer before the final softmax.
+
+  Returns:
+    Numpy array of bottleneck values.
+  '''
+
   bottleneck_values = sess.run(
       bottleneck_tensor,
       {image_data_tensor: image_data})
@@ -152,6 +238,7 @@ def run_bottleneck_on_image(sess, image_data, image_data_tensor,
 
 def maybe_download_and_extract():
   
+
   dest_directory = FLAGS.model_dir
   if not os.path.exists(dest_directory):
     os.makedirs(dest_directory)
