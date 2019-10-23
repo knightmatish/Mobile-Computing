@@ -237,7 +237,12 @@ def run_bottleneck_on_image(sess, image_data, image_data_tensor,
 
 
 def maybe_download_and_extract():
-  
+  """
+  Download and extract model tar file.
+
+  If the pretrained model we're using doesn't already exist, this function
+  downloads it from the TensorFlow.org website and unpacks it into a directory.
+  """
 
   dest_directory = FLAGS.model_dir
   if not os.path.exists(dest_directory):
@@ -263,6 +268,13 @@ def maybe_download_and_extract():
 
 def ensure_dir_exists(dir_name):
 
+  '''
+  Make sure if the directory exists
+
+  Arg: 
+    dir_name: Path name for the directory we want to get created
+
+  '''
 
   if not os.path.exists(dir_name):
     os.makedirs(dir_name)
@@ -270,6 +282,13 @@ def ensure_dir_exists(dir_name):
 
 def write_list_of_floats_to_file(list_of_floats , file_path):
 
+  '''
+  Writes a given list of floats to a binary file.
+
+  Args:
+    list_of_floats: List of floats we want to write to a file.
+    file_path: Path to a file where list of floats will be stored.
+  '''
   s = struct.pack('d' * BOTTLENECK_TENSOR_SIZE, *list_of_floats)
   with open(file_path, 'wb') as f:
     f.write(s)
@@ -277,6 +296,14 @@ def write_list_of_floats_to_file(list_of_floats , file_path):
 
 def read_list_of_floats_from_file(file_path):
 
+  '''
+  Reads floats from the file provided.
+
+  Args:
+    file_path: File path where list of floats was stored.
+  Returns:
+    Array of bottleneck values (list of floats).
+  '''
 
   with open(file_path, 'rb') as f:
     s = struct.unpack('d' * BOTTLENECK_TENSOR_SIZE, f.read())
